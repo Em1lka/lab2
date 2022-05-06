@@ -3,6 +3,7 @@ lenbuf = 1
 workbuf = ""
 buf = ""
 k = 4
+flag = False
 try:
 
     with open("lab2.txt", "r") as file:
@@ -15,6 +16,7 @@ try:
         while buf:                      #если буфер не пустой
             workbuf += buf                  #заполнение рабочего буфера символами из файла
             if re.findall(r'[.!?]', buf):   #если найдет .?! знак
+                flag = True
                 str = re.split(r'\W', workbuf)  #сплитуем по словам
                 str = str[:len(str)-1]          #удаляем пробел от знака препинания
                 if len(str) == k:               #если длина строки равна заданному количеству слов
@@ -23,9 +25,9 @@ try:
                 str = ""
             buf = file.read(lenbuf)
 
-        if re.findall(r'[^.!?]', workbuf):          #если в файле отсутствуют знаки то ->
-            print("\nВ файле *.txt нет знаков препинания!\n")
+        if flag == False:          #если в файле отсутствуют знаки то ->
+            print("\nВ файле *.txt нет знаков окончания предложения!\n")
 
 
 except FileNotFoundError:
-    print("\n файл *.txt в директории проекта не обнаружен.\n Добавьте файл в директорию или переименуйте существующий")
+    print("\n Файл *.txt в директории проекта не обнаружен.")
